@@ -1,13 +1,12 @@
 <script>
   import Column from "./Column.svelte";
   import { kanbanBoard } from "../stores/kanbanStore.js";
-  import { dndzone } from "svelte-dnd-action";
   import Add32 from "carbon-icons-svelte/lib/Add32";
 </script>
 
 <div class="board">
-  <ul use:dndzone={{ items: $kanbanBoard }} class="columns">
-    {#each $kanbanBoard as col}
+  <ul class="columns">
+    {#each $kanbanBoard as col (col.id)}
       <li><Column {...col} /></li>
     {/each}
     <li>
@@ -31,7 +30,7 @@
     /* background-color: mediumslateblue; */
   }
   #addColumnButton {
-      margin-top: 10px;
+    margin-top: 10px;
     border: solid 1px;
   }
 </style>

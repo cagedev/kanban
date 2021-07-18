@@ -41,10 +41,23 @@ const defaultColumns = [
 
 function newColumn() {
     return {
-        id: 10, // use a uuid()?
-        title: "Column 10",
+        id: 9, // use a uuid()
+        title: "Column 9",
         cards: [],
     }
 }
 
 export const kanbanBoard = writable(defaultColumns);
+
+export function update(id) {
+    console.log('doing update');
+    kanbanBoard.update(cols => {
+        return cols.map(col => {
+            if (col.id === id) {
+                return ({
+                    ...col
+                })
+            } else return { ...col }
+        })
+    })
+}

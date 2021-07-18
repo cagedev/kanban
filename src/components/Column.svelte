@@ -1,18 +1,34 @@
 <script>
-  import Add32 from "carbon-icons-svelte/lib/Add32";
   import Card from "./Card.svelte";
+  import { kanbanBoard } from "../stores/kanbanStore.js";
+
+  import { dndzone } from "svelte-dnd-action";
+
+  //   let items = $kanbanBoard;
+  const flipDurationMs = 300;
+
+  function handleDndConsider(e) {
+    $kanbanBoard = e.detail.items;
+  }
+  function handleDndFinalize(e) {
+    $kanbanBoard = e.detail.items;
+    console.log($kanbanBoard);
+  }
 
   export let cards = [];
   export let title;
   export let id;
 </script>
 
-<div class="column">
+<div
+  class="column"
+  use:dndzone={{ items: $kanbanBoard, flipDurationMs }}
+  on:consider={handleDndConsider}
+  on:finalize={handleDndFinalize}
+>
   <h2>{title}</h2>
-  <Add32 title="myTitle"/>
-  [button]
   <ul>
-    {#each cards as card}
+    {#each cards as card (card.id)}
       <li>
         <Card {...card} />
       </li>
