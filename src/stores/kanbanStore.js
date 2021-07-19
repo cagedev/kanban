@@ -1,31 +1,36 @@
 import { writable } from "svelte/store";
 
+// Sequential IDs
+let seqIdCol = 1;
+let seqIdCard = 1;
+
+// Default board data
 const defaultColumns = [
     {
-        id: 1,
-        title: "Column 1",
+        id: seqIdCol++,
+        title: "Column " + seqIdCol,
         cards: [
             {
-                id: 11,
-                title: "Card 11",
+                id: seqIdCard++,
+                title: "Card " + seqIdCard,
                 data: "",
                 dateCreated: new Date(),
             },
             {
-                id: 12,
-                title: "Card 12",
+                id: seqIdCard++,
+                title: "Card " + seqIdCard,
                 data: "no data at all...",
                 dateCreated: new Date(),
             }
         ],
     },
     {
-        id: 2,
+        id: seqIdCol++,
         title: "Column 2",
         cards: [
             {
-                id: 21,
-                title: "Card 21",
+                id: seqIdCard++,
+                title: "Card " + seqIdCard,
                 data: "",
                 dateCreated: new Date(),
             },
@@ -33,31 +38,50 @@ const defaultColumns = [
         ],
     },
     {
-        id: 3,
-        title: "Column 3",
+        id: seqIdCol++,
+        title: "Column " + seqIdCol,
         cards: [],
     },
 ]
 
+// 
 function newColumn() {
     return {
-        id: 9, // use a uuid()
-        title: "Column 9",
+        id: seqIdCol++,
+        title: "Column " + seqIdCol,
         cards: [],
+    }
+}
+
+function newCard() {
+    return {
+        id: seqIdCard++,
+        title: "Card " + seqIdCard,
+        data: "",
+        dateCreated: new Date(),
     }
 }
 
 export const kanbanBoard = writable(defaultColumns);
 
-export function update(id) {
-    console.log('doing update');
-    kanbanBoard.update(cols => {
-        return cols.map(col => {
-            if (col.id === id) {
-                return ({
-                    ...col
-                })
-            } else return { ...col }
-        })
-    })
+export function addColumn() {
+    kanbanBoard.update(
+        (prev) => [...prev, newColumn()]
+    )
+}
+
+export function deleteColumn(cid) {
+    kanbanBoard.update(
+        (prev) => prev.filter(col => col.id != cid)
+    )
+}
+
+export function addCard(cid) {
+    kanbanBoard.update(
+        (prev) => {
+            prev.find((col) => col.id == cid)
+                .cards.push(newCard())
+            return prev
+        }
+    )
 }

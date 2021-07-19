@@ -1,38 +1,55 @@
 <script>
   import Card from "./Card.svelte";
-  import { kanbanBoard } from "../stores/kanbanStore.js";
+  import { kanbanBoard, deleteColumn, addCard } from "../stores/kanbanStore.js";
+
+  import Delete24 from "carbon-icons-svelte/lib/Delete32";
+  import Add24 from "carbon-icons-svelte/lib/Add24";
 
   import { dndzone } from "svelte-dnd-action";
 
-  //   let items = $kanbanBoard;
-  const flipDurationMs = 300;
+  // const flipDurationMs = 300;
 
-  function handleDndConsider(e) {
-    $kanbanBoard = e.detail.items;
-  }
-  function handleDndFinalize(e) {
-    $kanbanBoard = e.detail.items;
-    console.log($kanbanBoard);
-  }
+  // function handleDndConsider(e) {
+  //   $kanbanBoard = e.detail.items;
+  // }
+  // function handleDndFinalize(e) {
+  //   $kanbanBoard = e.detail.items;
+  //   console.log($kanbanBoard);
+  // }
 
   export let cards = [];
   export let title;
   export let id;
 </script>
 
-<div
+<!-- TODO: Fix drag-n-drop -->
+<!-- <div
   class="column"
   use:dndzone={{ items: $kanbanBoard, flipDurationMs }}
   on:consider={handleDndConsider}
   on:finalize={handleDndFinalize}
->
-  <h2>{title}</h2>
+> -->
+<div class="column">
+  <h2>
+    {title}
+    <div class="deleteColumnButton">
+      <Delete24
+        on:click={() => deleteColumn(id)}
+        style="float: right; fill: white;"
+      />
+    </div>
+  </h2>
   <ul>
     {#each cards as card (card.id)}
       <li>
         <Card {...card} />
       </li>
     {/each}
+    <li>
+      <div class="addCardButton">
+        <Add24 on:click={() => addCard(id)} style="fill: black" />
+      </div>
+    </li>
   </ul>
 </div>
 
@@ -54,5 +71,23 @@
     width: 300px;
     margin: 10px;
     /* padding: 10px; */
+  }
+  .addCardButton {
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: solid 1px;
+    /* border-color: darkgreen; */
+    background-color: #5cb85c;
+    float: right;
+  }
+  .deleteColumnButton {
+    margin-top: 0px;
+    padding: 5px;
+    border-radius: 5px;
+    border: solid 1px;
+    /* border-color: darkgreen; */
+    background-color: #d9534f;
+    float: right;
   }
 </style>

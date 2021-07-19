@@ -1,7 +1,7 @@
 <script>
   import Column from "./Column.svelte";
-  import { kanbanBoard } from "../stores/kanbanStore.js";
-  import Add32 from "carbon-icons-svelte/lib/Add32";
+  import { kanbanBoard, addColumn } from "../stores/kanbanStore.js";
+  import Add24 from "carbon-icons-svelte/lib/Add32";
 </script>
 
 <div class="board">
@@ -10,8 +10,8 @@
       <li><Column {...col} /></li>
     {/each}
     <li>
-      <div id="addColumnButton">
-        <Add32 />
+      <div class="addColumnButton">
+        <Add24 on:click={addColumn} />
       </div>
     </li>
   </ul>
@@ -29,7 +29,10 @@
     float: left;
     /* background-color: mediumslateblue; */
   }
-  #addColumnButton {
+  .addColumnButton {
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #5cb85c;
     margin-top: 10px;
     border: solid 1px;
   }

@@ -22,7 +22,7 @@
 <style>
   .card {
     background-color: lightblue;
-    color: hotpink;
+    color: black;
     border: 2px solid black;
     border-radius: 10px;
     padding: 3px;
