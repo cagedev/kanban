@@ -45,10 +45,11 @@ const defaultColumns = [
 ]
 
 // 
-function newColumn() {
+function newColumn(title) {
+    console.log(title);
     return {
         id: seqIdCol++,
-        title: "Column " + seqIdCol,
+        title: title || "Column " + seqIdCol,
         cards: [],
     }
 }
@@ -64,9 +65,9 @@ function newCard() {
 
 export const kanbanBoard = writable(defaultColumns);
 
-export function addColumn() {
+export function addColumn(title) {
     kanbanBoard.update(
-        (prev) => [...prev, newColumn()]
+        (prev) => [...prev, newColumn(title)]
     )
 }
 
@@ -84,4 +85,21 @@ export function addCard(cid) {
             return prev
         }
     )
+}
+
+// All card ids are unique, loop over all to find the correct one
+export function updateCard(id, cardTitle, cardData) {
+    kanbanBoard.update(
+        (prev) => {
+            prev.forEach((el) => {
+                // console.log(el)
+                // TODO: set with a callback to set multiple
+                let c = el.cards.find((card) => card.id == id)
+                if (c) {
+                    c.title = cardTitle || c.title;
+                    c.data = cardData || c.data;
+                }
+            })
+            return prev;
+        });
 }

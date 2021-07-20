@@ -1,8 +1,20 @@
 <script>
   import Column from "./Column.svelte";
-  import { kanbanBoard, addColumn } from "../stores/kanbanStore.js";
+  import { kanbanBoard, addColumn, updateCard } from "../stores/kanbanStore.js";
   import Add24 from "carbon-icons-svelte/lib/Add32";
 </script>
+
+<!-- DEBUG: updateCard -->
+<button
+  on:click={() =>
+    updateCard(
+      1,
+      "newTitle",
+      "lots and lots of new datalots and lots of new datalots and lots of new datalots and lots of new datalots and lots of new datalots and lots of new data"
+    )}
+>
+  updateCard
+</button>
 
 <div class="board">
   <ul class="columns">
@@ -11,7 +23,7 @@
     {/each}
     <li>
       <div class="addColumnButton">
-        <Add24 on:click={addColumn} />
+        <Add24 on:click={() => addColumn("New")} />
       </div>
     </li>
   </ul>
