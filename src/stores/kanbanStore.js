@@ -1,23 +1,23 @@
 import { writable } from "svelte/store";
 
 // Sequential IDs
-let seqIdCol = 1;
-let seqIdCard = 1;
+let seqIdCol = -1;
+let seqIdCard = -1;
 
 // Default board data
 const defaultColumns = [
     {
-        id: seqIdCol++,
+        id: ++seqIdCol,
         title: "Column " + seqIdCol,
         cards: [
             {
-                id: seqIdCard++,
+                id: ++seqIdCard,
                 title: "Card " + seqIdCard,
                 data: "",
                 dateCreated: new Date(),
             },
             {
-                id: seqIdCard++,
+                id: ++seqIdCard,
                 title: "Card " + seqIdCard,
                 data: "no data at all...",
                 dateCreated: new Date(),
@@ -25,11 +25,11 @@ const defaultColumns = [
         ],
     },
     {
-        id: seqIdCol++,
-        title: "Column 2",
+        id: ++seqIdCol,
+        title: "Column " + seqIdCol,
         cards: [
             {
-                id: seqIdCard++,
+                id: ++seqIdCard,
                 title: "Card " + seqIdCard,
                 data: "",
                 dateCreated: new Date(),
@@ -38,7 +38,7 @@ const defaultColumns = [
         ],
     },
     {
-        id: seqIdCol++,
+        id: ++seqIdCol,
         title: "Column " + seqIdCol,
         cards: [],
     },

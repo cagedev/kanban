@@ -2,6 +2,7 @@
   import Card from "./Card.svelte";
   import { kanbanBoard, deleteColumn, addCard } from "../stores/kanbanStore.js";
 
+  import InlineInput from "svelte-inline-input";
   import Delete24 from "carbon-icons-svelte/lib/Delete32";
   import Add24 from "carbon-icons-svelte/lib/Add24";
 
@@ -31,7 +32,8 @@
 > -->
 <div class="column">
   <h2>
-    {title}
+    <!-- TODO: Update store when title value is changed -->
+    <InlineInput bind:value={title} />
     <div class="deleteColumnButton">
       <Delete24
         on:click={() => deleteColumn(id)}
@@ -41,8 +43,15 @@
   </h2>
   <ul>
     {#each cards as card (card.id)}
+      <!-- ISSUE Binding spread attributes #5137  -->
+      <!-- <li><Card {...card} /></li> -->
       <li>
-        <Card {...card} />
+        <Card
+          bind:title={card.title}
+          bind:id={card.id}
+          bind:data={card.data}
+          bind:dateCreated={card.dateCreated}
+        />
       </li>
     {/each}
     <li>
